@@ -1,21 +1,29 @@
-import "reflect-metadata";
-import {createConnection} from "typeorm";
-import {User} from "./entity/User";
+import fastify from 'fastify'
+import { createConnection, getConnectionOptions } from 'typeorm'
+import { getUserList } from './usecase/user'
+const server = fastify({
+    logger: true
+})
 
-createConnection().then(async connection => {
+server.get('/', async (request, reply) => {
+  const userList = await getUserList()
+  reply.type('application/json').code(200)
+  return {userList}
+})
 
-    console.log("Inserting a new user into the database...");
-    const user = new User();
-    user.firstName = "Timber";
-    user.lastName = "Saw";
-    user.age = 25;
-    await connection.manager.save(user);
-    console.log("Saved a new user with id: " + user.id);
 
-    console.log("Loading users from the database...");
-    const users = await connection.manager.find(User);
-    console.log("Loaded users: ", users);
+const start = async () => {
+  const connectionOptions = await getConnectionOptions();
+  console.log(connectionOptions)
+  const condition = {
+    ...connectionOptions,
+  };
 
-    console.log("Here you can setup and run express/koa/any other framework.");
+  await createConnection(condition);
+  server.listen(3000, (err, address) => {
+    if (err) throw err
+    server.log.info(`server listening on ${address}`)
+})
+}
 
-}).catch(error => console.log(error));
+start()
