@@ -4,6 +4,8 @@ import { getUserList } from './usecase/user'
 const server = fastify({
     logger: true
 })
+server.register(require('fastify-formbody'))
+
 
 server.get('/', async (request, reply) => {
   const userList = await getUserList()
