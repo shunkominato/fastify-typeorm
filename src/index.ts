@@ -1,6 +1,6 @@
 import fastify from 'fastify'
 import { createConnection, getConnectionOptions } from 'typeorm'
-import { getUserList } from './usecase/user'
+import { getUserList, createUser, ICreateUser } from './usecase/user'
 const server = fastify({
     logger: true
 })
@@ -15,9 +15,9 @@ server.get('/', async (request, reply) => {
 
 server.post('/', async (request, reply) => {
   console.log(request.body)
-  const userList = await getUserList()
-  // reply.type('application/json').code(200)
-  return 
+  const createdUserEntity = await createUser({params: request.body as ICreateUser})
+  reply.type('application/json').code(200)
+  return createdUserEntity
 })
 
 

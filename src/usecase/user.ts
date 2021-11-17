@@ -1,3 +1,4 @@
+import { createUserAdapter } from '../models/User/adapter';
 import * as UserRepository from '../models/User/repository'
 
 export const getUserList = async () => {
@@ -5,12 +6,15 @@ export const getUserList = async () => {
   return userList;
 }
 
-interface ICreateUser {
+export interface ICreateUser {
   firstName: string,
   lastName: string,
   age: number,
 }
+
 export const createUser = async({params}: {params: ICreateUser}) => {
-  
+  const userWriteModel = createUserAdapter({params})
+  const createdUserEntity = await userWriteModel.create()
+  return createdUserEntity
 
 }
