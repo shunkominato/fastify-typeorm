@@ -1,11 +1,11 @@
-import { EntityManager } from "typeorm";
+import { EntityManager } from 'typeorm';
 import { classToPlain } from 'class-transformer';
-import { BaseWriteModel } from "../baseModel";
-import { createUser } from './repository'
-import { ICreateUser } from "../../usecase/user";
+import { BaseWriteModel } from '../baseModel';
+import { createUser } from './repository';
+import { ICreateUser } from '../../usecase/user';
 
 export class UserWriteModel extends BaseWriteModel {
-  id?: number
+  id?: number;
 
   firstName: string;
 
@@ -14,18 +14,14 @@ export class UserWriteModel extends BaseWriteModel {
   age: number;
 
   async create() {
-    const isError = await this.validate({ method: 'CREATE'})
+    const isError = await this.validate({ method: 'CREATE' });
 
-    if(isError) throw Error('validate Error')
+    if (isError) throw Error('validate Error');
 
-    const params = classToPlain(this) as ICreateUser
+    const params = classToPlain(this) as ICreateUser;
 
-    const createdUserEntity = await createUser({params})
+    const createdUserEntity = await createUser({ params });
 
-    return createdUserEntity
-
-
+    return createdUserEntity;
   }
-
-
 }
