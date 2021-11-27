@@ -7,9 +7,8 @@ interface ICreateUser {
   age: number;
 }
 
-export const createUserAdapter = ({ params }: { params: ICreateUser }) =>
-  plainToClass(UserWriteModel, {
-    firstName: params.firstName,
-    lastName: params.lastName,
-    age: params.age,
-  });
+export const createUserAdapter = ({ params }: { params: ICreateUser }) => plainToClass(UserWriteModel, {
+  firstName: params.firstName,
+  lastName: params.lastName,
+  age: params.age,
+});
