@@ -1,6 +1,6 @@
 import fastify from 'fastify';
 import { createConnection, getConnectionOptions } from 'typeorm';
-import { getUserList, createUser, ICreateUser } from './usecase/user';
+import { getUserList, createUser, ICreateUser } from 'src/usecase/user';
 
 const server = fastify({
   logger: true,
