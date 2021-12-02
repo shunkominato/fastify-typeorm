@@ -1,4 +1,4 @@
-import { getRepository, getManager } from 'typeorm';
+import { getRepository } from 'typeorm';
 import { User } from '../../orm/entity/User';
 import { ICreateUser } from '../../usecase/user';
 

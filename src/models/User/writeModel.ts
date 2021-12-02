@@ -1,4 +1,4 @@
-import { EntityManager } from 'typeorm';
+// import { EntityManager } from 'typeorm';
 import { classToPlain } from 'class-transformer';
 import { BaseWriteModel } from '../baseModel';
 import { createUser } from './repository';
