@@ -1,4 +1,4 @@
-import fastify from 'fastify';
+import fastify, { RouteShorthandOptions } from 'fastify';
 import { createConnection, getConnectionOptions } from 'typeorm';
 import { getUserList, createUser, ICreateUser } from 'src/usecase/user';
 
@@ -7,7 +7,17 @@ const server = fastify({
 });
 server.register(require('fastify-formbody'));
 
-server.get('/', async (request, reply) => {
+const opts: RouteShorthandOptions = {
+  schema: {
+    response: {
+      200: {
+        type: 'object',
+      },
+    },
+  },
+};
+
+server.get('/', opts, async (request, reply) => {
   const userList = await getUserList();
   reply.type('application/json').code(200);
   return { userList };
@@ -24,7 +34,6 @@ server.post('/', async (request, reply) => {
 
 const start = async () => {
   const connectionOptions = await getConnectionOptions();
-  console.log(connectionOptions);
   const condition = {
     ...connectionOptions,
   };
