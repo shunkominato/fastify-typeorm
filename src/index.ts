@@ -9,6 +9,9 @@ server.register(require('fastify-formbody'));
 
 const opts: RouteShorthandOptions = {
   schema: {
+    querystring: {
+      name: { type: 'string' }
+    },
     response: {
       200: {
         type: 'object',
